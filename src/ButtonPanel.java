@@ -3,11 +3,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel {
+    private JButton detailsButton, editButton, deleteButton, finishButton;
+
     public ButtonPanel(JTable table, PlanTableModel model) {
-        JButton detailsButton = new JButton("詳細");
-        JButton editButton = new JButton("編輯");
-        JButton deleteButton = new JButton("刪除");
-        JButton finishButton = new JButton("已完成");
+        detailsButton = new JButton("詳細");
+        editButton = new JButton("編輯");
+        deleteButton = new JButton("刪除");
+        finishButton = new JButton("已完成");
 
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -35,7 +37,7 @@ public class ButtonPanel extends JPanel {
     }
 
     private boolean confirmAction(String text) {
-        return JOptionPane.showConfirmDialog(this,text,"確認",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        return JOptionPane.showConfirmDialog(this, text, "確認", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
 
 }
