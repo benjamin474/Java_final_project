@@ -8,5 +8,4 @@ public class PlanFrame extends JFrame {
         add(panel);
     }
 
-
 }
