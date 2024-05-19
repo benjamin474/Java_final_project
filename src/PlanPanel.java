@@ -4,6 +4,7 @@ public class PlanPanel extends JPanel {
     private JTable table;
     private PlanTableModel model;
 
+
     public PlanPanel(){
         setLayout(new BorderLayout());
 
@@ -22,5 +23,12 @@ public class PlanPanel extends JPanel {
 
         add(new ButtonPanel(table,model),BorderLayout.SOUTH);
     }
+
+    public void addPlan(String planName, String planContent, String deadline){
+
+    }
+
+
+
     // Add some other ways to manage data
 }
