@@ -6,10 +6,12 @@
 ```bash
 cd ./src
 ```
+
 - 編譯
 ```bash
 javac -d . *.java
 ```
+
 - 執行
 ```bash
 java ./PlanManagerMainPage.java
