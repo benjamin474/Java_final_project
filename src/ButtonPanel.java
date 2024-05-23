@@ -52,15 +52,17 @@ public class ButtonPanel extends JPanel {
         return JOptionPane.showConfirmDialog(this, text, "確認", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
 
+
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-//            if (e.getSource() == deleteButton) {
+            if (e.getSource() == deleteButton) {
 //                int row = table.getSelectedRow();
-//                System.out.println("Delete Button");
-//                if (row >= 0 && confirmAction("確定要刪除嗎？")) {
+                System.out.println("Delete Button");
+                if (confirmAction("確定要刪除嗎？")) {
 //                    model.removeRow(row);
-//                }
-//            }
+                    System.out.println("Deleted");
+                }
+            }
             if (e.getSource() == editButton) {
                 System.out.println("EditButton");
             }
@@ -72,6 +74,7 @@ public class ButtonPanel extends JPanel {
             }
         }
     }
+
 
 
 }

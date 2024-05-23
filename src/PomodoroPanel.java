@@ -12,6 +12,7 @@ public class PomodoroPanel extends JPanel {
     private JLabel timerLabel;
     private JButton startButton;
     private JButton resetButton;
+    private JButton pauseButton;
     private Timer timer;
     private int timeLeft;
     private boolean isWorkTime;
@@ -19,19 +20,24 @@ public class PomodoroPanel extends JPanel {
     public PomodoroPanel() {
         setLayout(new BorderLayout());
 
-        timerLabel = new JLabel("25:00", SwingConstants.CENTER);
+        timerLabel = new JLabel("00:05", SwingConstants.CENTER);
         timerLabel.setFont(new Font("Serif", Font.BOLD, 48));
         add(timerLabel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
         startButton = new JButton("開始");
         resetButton = new JButton("重置");
+        pauseButton = new JButton("暫停");
+
         buttonPanel.add(startButton);
         buttonPanel.add(resetButton);
+        buttonPanel.add(pauseButton);
+
         add(buttonPanel, BorderLayout.SOUTH);
 
-        startButton.addActionListener(new StartButtonListener());
-        resetButton.addActionListener(new ResetButtonListener());
+        startButton.addActionListener(new ButtonListener());
+        resetButton.addActionListener(new ButtonListener());
+        pauseButton.addActionListener(new ButtonListener());
 
         resetTimer();
     }
@@ -52,40 +58,45 @@ public class PomodoroPanel extends JPanel {
         timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
     }
 
-    private class StartButtonListener implements ActionListener {
+    private class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            startButton.setEnabled(false);
-            timer = new Timer();
-            timer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    if (timeLeft > 0) {
-                        timeLeft--;
-                        updateTimerLabel();
-                    } else {
-                        timer.cancel();
-                        if (isWorkTime) {
-                            timeLeft = BREAK_TIME;
-                            isWorkTime = false;
-                            JOptionPane.showMessageDialog(null, "工作時間結束，休息一下吧！");
+            if(e.getSource() == startButton){
+                startButton.setEnabled(false);
+                timer = new Timer();
+                timer.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (timeLeft > 0) {
+                            timeLeft--;
+                            updateTimerLabel();
                         } else {
-                            timeLeft = WORK_TIME;
-                            isWorkTime = true;
-                            JOptionPane.showMessageDialog(null, "休息結束，開始新的工作吧！");
+                            timer.cancel();
+                            if (isWorkTime) {
+                                timeLeft = BREAK_TIME;
+                                isWorkTime = false;
+                                JOptionPane.showMessageDialog(null, "工作時間結束，休息一下吧！");
+                            } else {
+                                timeLeft = WORK_TIME;
+                                isWorkTime = true;
+                                JOptionPane.showMessageDialog(null, "休息結束，開始新的工作吧！");
+                            }
+                            updateTimerLabel();
+                            startButton.setEnabled(true);
                         }
-                        updateTimerLabel();
-                        startButton.setEnabled(true);
                     }
-                }
-            }, 0, 1000);
+                }, 0, 1000);
+                System.out.println("Started!");
+            }
+            if(e.getSource() == resetButton){
+                resetTimer();
+                System.out.println("Reset!");
+            }
+            if(e.getSource()==pauseButton){
+                System.out.println("Paused!");
+
+            }
         }
     }
 
-    private class ResetButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            resetTimer();
-        }
-    }
 }
